@@ -38,31 +38,26 @@ if len(eg.event.payload) > 2:
     eg.globals.bb_session = eg.event.payload[3] #SessionID
     eg.globals.bb_request = eg.event.payload[4] #RequestID
 
-    #print 'BlackBox Command Received: ' + eg.globals.bb_cmd \
-    #+ '\nDevice Location: ' + eg.globals.bb_location \
-    #+ '\nSkillID: ' + eg.globals.bb_skillid \    
-    #+ '\nSessionID: ' + eg.globals.bb_session                                                       
-    #+ '\nRequestID: ' + eg.globals.bb_request
-
+	#Example 1
     if eg.globals.bb_cmd == 'skip' or eg.globals.bb_cmd == 'skip track':
-        #Action
         eg.TriggerEvent('Alexa-skip track')
         ReturnMsg = 'Lets find a better track, ' 
         EndSession = 'yes'
     
-    #This is an example of the command "lights on"
-    elif eg.globals.bb_cmd.startswith('LightsOnIn'):
-                    eg.TriggerEvent('Alexa.' + eg.globals.bb_cmd)
-                    ReturnMsg = 'Bing! the ' + eg.globals.bb_cmd.partition(' ')[2] + ' lights are on.'
-                    EndSession = 'yes'
+    #Example 2 This is a configured example used in the tutorial of the configuration of option 1.
+    #elif eg.globals.bb_cmd.startswith('LightsOnIn'):
+    #                eg.TriggerEvent('Alexa.' + eg.globals.bb_cmd)
+    #                ReturnMsg = 'Bing! the ' + eg.globals.bb_cmd.partition(' ')[2] + ' lights are on.'
+    #                EndSession = 'yes'
 
-    elif   eg.globals.bb_cmd == 'play':
-                    #Action
+    #Example 3
+	elif   eg.globals.bb_cmd == 'play':
                     eg.TriggerEvent('Alexa.Play/Pause')
                     ReturnMsg = 'Got it, ' + random.choice(PLAY_RESPONSES)
                     EndSession = 'yes'
         
-    elif   eg.globals.bb_cmd == 'turn off' or \
+    #Example 4 Using multiple slots to trigger an event (usful when using configuration option 3 without configuring specific slots)
+	elif   eg.globals.bb_cmd == 'turn off' or \
                     eg.globals.bb_cmd == 'shutdown' or \
                     eg.globals.bb_cmd == 'switch off' or \
                     eg.globals.bb_cmd == 'volume down' or \
@@ -75,12 +70,11 @@ if len(eg.event.payload) > 2:
     
     else:
         
-        #Option 1 - Only process configured commands. It will prompt with We did not understand the command, then re-prompt with follow up action. 
-        #To enable remove "#" from lines below and add "#" to Option 2 code lines.
+        #Option 1: If you only want to process configured commands remove "#" from lines below and add "#" to Option 2 code lines.
         #ReturnMsg = 'I did not understand the command ' + eg.globals.bb_cmd + ' , please try a command like lights on'
         #EndSession = 'no'
         
-        #Option to attempt command as interpruted. Allows you to quickly setup multiple commands, but prone to miscommunication
+        #Option 2: to attempt command as interpruted. Allows you to quickly setup multiple commands, but prone to miscommunication
         ReturnMsg = 'Trying command ' + eg.globals.bb_cmd
         eg.TriggerEvent('Alexa.' +eg.globals.bb_cmd)
         EndSession = 'yes'
