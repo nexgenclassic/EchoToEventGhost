@@ -1,9 +1,27 @@
 {
-  "intents": [ {
-    "intent": "PerformAction",
-    "slots": [ {
-       "name": "Action",
-       "type": "LITERAL"
-    } ]
-  } ]
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "event ghost",
+            "intents": [
+                {
+                    "name": "PerformAction",
+                    "slots": [
+                        {
+                            "name": "Action",
+                            "type": "AMAZON.SearchQuery",
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "Perform Action {Action}"
+                    ]
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                }
+            ],
+            "types": []
+        }
+    }
 }

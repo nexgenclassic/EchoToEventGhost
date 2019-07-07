@@ -1,8 +1,9 @@
 {
   "session": {
+    "skillId": "skill1234",
     "sessionId": "session1234",
     "application": {
-      "applicationId": "enter your app id here"
+      "applicationId": "123456789"
     },
     "attributes": null,
     "user": {

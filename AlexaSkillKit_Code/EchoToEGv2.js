@@ -1,12 +1,13 @@
 /**
  * EchoToEG - A custom Amazon Alexa Skill Kit that can send any spoken command to EventGhost
- * v2.2(20170704)
- * 1. Added a Welcome post to EG (allows for a custom responses, I'm suggesting an event bases on the time and past event history)
- * 2. The post to EG now has 4 objects in the payload('spoken string', deviceid, sessionid, requestId)
- * 3. Rewrote some of the code, it should look much cleaner
- * 
- * Brandon Simonsen (m19brandon.shop@gmail.com)
- * https://github.com/m19brandon/EchoToEventGhost
+ * v3.0(20197607) - (updated by SlattyNaN) updates:-
+ * 1. Added provision for Launch Requests as commands - Launch request commands work as a shorter invocation, but must be built as there own skill.
+ * 2. Amended Welcome request function to have an option to end request (enable launch requests as commands)
+ * 3. Enabled EG Event Welcome responses enabled as standard 
+ * 4. Added step by step tutorial
+   
+ * Author: Brandon Simonsen (m19brandon.shop@gmail.com), updates: Slatty (slattynan@gmail.com)
+ * https://github.com/nexgenclassic/EchoToEventGhost
  * EventGhost Thread: http://www.eventghost.net/forum/viewtopic.php?f=2&t=7429
  */
 
@@ -14,27 +15,28 @@
 
 //http or https
 var http = require('http');
-//Your External IP, https://whatismyipaddress.com/
-var EG_ip = '192.168.1.1';
+//Your External IP, https://whatismyipaddress.com/ or dynamic domain address
+var EG_ip = '192.168.0.1';
 //The port that your have configured for the Event Ghost webserver to run on (80 is default)
 //If you need help with configuring your router look here http://www.wikihow.com/Set-Up-Port-Forwarding-on-a-Router
 var EG_Port = '80';
 //The event that will be posted to EventGhost
 var EG_Event = 'EchoToEG';
-//Uncomment if you wanted a customized welcome message controlled by EG.
-//var EG_Event_Welcome = 'EchoToEGWelcome';
+//Add # comment if you want to disable the customised welcome message controlled by EG.
+var EG_Event_Welcome = 'EchoToEGWelcome';
 //Leave blank unless you need a specif path (default would be blank)
 var EG_uri = '';
 //Leave user and password blank if Basic Auth is not used on the EventGhost WebServer
 var EG_user = '';
 var EG_password = '';
 
-// Adding Seruicty if you want.
+// Adding Security if you want.
 //This ID is can be found under the Alexa tab on the amazon developer console page
 //Goto https://developer.amazon.com/edw/home.html#/skills > Click 'View Skill ID'
 //var Alexa_Skill_ID = 'amzn1.ask.skill.#';
 
 var deviceId = '';
+var skillId = '';
 
 
 // --------------- Main handler -----------------------
@@ -43,8 +45,8 @@ var deviceId = '';
 // etc.) The JSON body of the request is provided in the event parameter.
 exports.handler = function (event, context) {
     console.log(event);
+    var skillId = event.session.application.applicationId;
     try {
-        console.log('event.session.application.applicationId=' + event.session.application.applicationId);
         /**
         * Adding Security if you want.
         * Uncomment this if statement and populate with your skill's application ID to
@@ -75,17 +77,20 @@ exports.handler = function (event, context) {
 
         if (event.session.new) {
             onSessionStarted({requestId: event.request.requestId}, event.session);
+            console.log('event.request.type=' + event.request.type);
         }
 
         if (event.request.type === 'LaunchRequest') {
             onLaunch(event.request,
                      event.session,
+                     skillId,
                      function callback(sessionAttributes, speechletResponse) {
                         context.succeed(buildResponse(sessionAttributes, speechletResponse));
                      });
         }  else if (event.request.type === 'IntentRequest') {
             onIntent(event.request,
                      event.session,
+                     skillId,
                      function callback(sessionAttributes, speechletResponse) {
                          context.succeed(buildResponse(sessionAttributes, speechletResponse));
                      });
@@ -144,25 +149,25 @@ function onSessionStarted(sessionStartedRequest, session) {
 /**
  * Called when the user launches the skill without specifying what they want.
  */
-function onLaunch(launchRequest, session, callback) {
+function onLaunch(launchRequest, session, skillId, callback) {
     console.log('onLaunch requestId=' + launchRequest.requestId + ', sessionId=' + session.sessionId);
 
     // Dispatch to your skill's launch.
-    getWelcomeResponse(launchRequest.requestId,session,callback);
+    getWelcomeResponse(launchRequest.requestId,session,skillId,callback);
 }
 
 /**
  * Called when the user specifies an intent for this skill.
  */
-function onIntent(intentRequest, session, callback) {
-    console.log('onIntent requestId=' + intentRequest.requestId + ', sessionId=' + session.sessionId);
-
+function onIntent(intentRequest, session, skillId, callback) {
+    console.log('onIntent requestId=' + intentRequest.requestId + ', sessionId=' + session.sessionId + ', intent.name=' + intentRequest.intent.name);
+   
     var intent = intentRequest.intent,
         intentName = intentRequest.intent.name;
         
     // Whatever the Intent is, pass it straight through to 
     // EventGhost
-    callEchoToEG(intent,intentRequest.requestId,session,callback);
+    callEchoToEG(intent,intentRequest.requestId,session,skillId,callback,intentName);
 
 }
 
@@ -196,6 +201,7 @@ function Get_shouldEndSession(string, def)
                     end = false;
                 }
             }
+
         }
     }
     return end;
@@ -207,7 +213,7 @@ function Get_shouldEndSession(string, def)
  * EG's response
  */
 
-function callEchoToEG(intent,requestId,session,callback)
+function callEchoToEG(intent,requestId,session,skillId,callback,intentName)
 {
     this.cb = callback;
     var sessionAttributes = '{}';
@@ -220,18 +226,38 @@ function callEchoToEG(intent,requestId,session,callback)
     var repromptText = 'I could not understand, please try again';
     var i = 0;
     var slots = intent.slots;
-    
+  
     //Pull the spoken text and format
-    var actionSlot = intent.slots.Action;
-    var setAction = actionSlot.value.toLowerCase();
-    var setActionURI = require('querystring').escape(setAction);
-    console.log('callEchoToEG - Intent name = ' + intent.name);
-    console.log('callEchoToEG - Intent = ' + setAction);
-    console.log('callEchoToEG - Intent = ' + setActionURI);
+    //Splits innovacation only requests from requests with Intents
+    if(intent.slots === undefined || intent.slots.length === 0) {
+        //Uses the intent name as optoinal action for EG
+        var setAction = intentName;
+        var setActionURI = require('querystring').escape(setAction);
+        console.log('callEchoToEG - Intent = ' + setActionURI);
+    }
+    else
+    {
+        //Find the name of the slot (this allows multiple commands in the Alexa skill)
+        const filledSlots = intent.slots;
+        const slotValues = getSlotValues(filledSlots);
+        var slotname = slotValues.Action.intentName;
+        console.log('slot name = ' + slotname); 
+        var actionSlot =  intent.slots[slotname];
+        console.log(`The filled slotValues: ${JSON.stringify(slotValues)}`);
 
+
+        console.log('intent.slots.Action  = ' + intent.slots.slotname); 
+        //Uses the action slot command as action for EG
+        var setAction = actionSlot.value.toLowerCase();
+        console.log('callEchoToEG - Intent & Action = ' + intentName + ' ' + setAction);  
+        var setActionURI = require('querystring').escape(intentName + ' ' + setAction);
+        console.log('callEchoToEG - Intent = ' + setActionURI); 
+    }
+    
+    console.log('callEchoToEG - Intent name = ' + intent.name);
 
 // Options included where we should send the request to with or without basic auth
-    EG_uri = '/index.html?' + EG_Event + '&' + setActionURI + '&' + deviceId + '&' + session.sessionId + '&' + requestId;
+    EG_uri = '/index.html?' + EG_Event + '&' + setActionURI + '&' + deviceId + '&' + skillId + '&' + session.sessionId + '&' + requestId;
     
     
     sendToEG(EG_uri,function(body) {
@@ -276,16 +302,16 @@ function callEchoToEG(intent,requestId,session,callback)
  * This is function is similar to callEchoToEG but handles the welcome message.
  */
 
-function getWelcomeResponse(requestId,session,callback)
+function getWelcomeResponse(requestId,session,skillId,callback)
 {
     this.cb = callback;
     // If we wanted to initialize the session to have some attributes we could add those here.
     var sessionAttributes = {};
     var cardTitle = 'Welcome to Echo To EventGhost';
-    var speechOutput = "Hello, I'm this home's automation AI, what can I do for you";
+    var speechOutput = "confirm your command!";
     // If the user either does not reply to the welcome message or says something that is not
     // understood, they will be prompted again with this text.
-    var repromptText = 'I could not understand, please try again';
+    var repromptText = 'command not understood, please try again';
     var shouldEndSession = false;
 
     /**
@@ -293,7 +319,7 @@ function getWelcomeResponse(requestId,session,callback)
      * information above.
      */
     if( typeof EG_Event_Welcome !== 'undefined' ) {
-        EG_uri = '/index.html?' + EG_Event_Welcome + '&&' + deviceId + '&' + session.sessionId + '&' + requestId;
+        EG_uri = '/index.html?' + EG_Event_Welcome + '&&' + deviceId + '&' + skillId + '&' + session.sessionId + '&' + requestId;
         sendToEG(EG_uri,function(body) {
             var egw_results = body;
             if (egw_results != 'Error') {
@@ -303,6 +329,9 @@ function getWelcomeResponse(requestId,session,callback)
                 if(egw_results.indexOf('Welcome Msg: ') > -1) {
                     var lines = egw_results.split('\n');
                     var setWelcomeMsg = '';
+
+                    var shouldEndSession = Get_shouldEndSession(egw_results,shouldEndSession);
+                    //if (shouldEndSession === '') { shouldEndSession = false;}
                     for(var i = 0;i < lines.length;i++){
                         if(lines[i].indexOf('Welcome Msg: ') > -1) {
                             var rtn_msg = lines[i].split('Msg:')[1].trim();
@@ -326,6 +355,28 @@ function getWelcomeResponse(requestId,session,callback)
     }
     //callback(sessionAttributes,buildSpeechletResponse(cardTitle, speechOutput, repromptText, shouldEndSession));
 }
+
+
+function getSlotValues(filledSlots) {
+  const slotValues = {};
+  var Action = 'Action';
+    
+  console.log(`The filled slots: ${JSON.stringify(filledSlots)}`);
+
+  Object.keys(filledSlots).forEach((item) => {
+    const name = Action;
+    {
+      slotValues[name] = {
+        intentName: filledSlots[item].name,
+        actionName: filledSlots[item].value,
+      };
+    }
+  }, this);
+  
+  console.log(`The reviewed slots: ${JSON.stringify(slotValues)}`);
+  return slotValues;
+}
+
 
 /**
  * Reusable function that handle the post to EG
