@@ -106,14 +106,14 @@ Note: There are other variables that can be set for added security or personalis
 
 ## Step 4 (EventGhost, add some code to make stuff happen)
 
-2. Create a new Python Script Macro, Name it EG Alexa Welcome Script, copy in the contents of  [\EchoToEventGhost\EventGhost\_Code\PythonWelcomeScript.py](https://github.com/nexgenclassic/EchoToEventGhost/blob/master/EventGhost_Code/PythonWelcomeScript.py)
-3. Create a second new Python Script Macro, Name it EG Alexa Action Script, copy in the contents of [\EchoToEventGhost\EventGhost\_Code\PythonActionScript.py](https://github.com/nexgenclassic/EchoToEventGhost/blob/master/EventGhost_Code/PythonActionScript.py)
-4. Copy [\EchoToEventGhost\EventGhost\_Code\index.html](https://github.com/m19brandon/EchoToEventGhost/blob/master/EventGhost_Code/index.html) into your webserver folder.
-5. Now it&#39;s time to talk to Alexa! Say: &quot;Alexa, Event Ghost&quot;. It will error, this is normal.
-6. From your EventGhost log, drag the HTTP.EchoToEGWelcome[etc…]. event into the welcome script macro.
-7. Now talk to Alexa again! Say: &quot;Alexa, ask Event Ghost to perform action test&quot;. It will error again.
-8. From your EventGhost log, drag the EchoToEG [etc…]. event into the action script macro.
-9. Test your Skill.
+1. Create a new Python Script Macro, Name it EG Alexa Welcome Script, copy in the contents of  [\EchoToEventGhost\EventGhost\_Code\PythonWelcomeScript.py](https://github.com/nexgenclassic/EchoToEventGhost/blob/master/EventGhost_Code/PythonWelcomeScript.py)
+2. Create a second new Python Script Macro, Name it EG Alexa Action Script, copy in the contents of [\EchoToEventGhost\EventGhost\_Code\PythonActionScript.py](https://github.com/nexgenclassic/EchoToEventGhost/blob/master/EventGhost_Code/PythonActionScript.py)
+3. Copy [\EchoToEventGhost\EventGhost\_Code\index.html](https://github.com/m19brandon/EchoToEventGhost/blob/master/EventGhost_Code/index.html) into your webserver folder.
+4. Now it&#39;s time to talk to Alexa! Say: &quot;Alexa, Event Ghost&quot;. It will error, this is normal.
+5. From your EventGhost log, drag the HTTP.EchoToEGWelcome[etc…]. event into the welcome script macro.
+6. Now talk to Alexa again! Say: &quot;Alexa, ask Event Ghost to perform action test&quot;. It will error again.
+7. From your EventGhost log, drag the EchoToEG [etc…]. event into the action script macro.
+8. Test your Skill.
 
 ## Setting up your commands
 
