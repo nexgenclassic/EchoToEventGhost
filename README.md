@@ -160,41 +160,40 @@ Note: The play command has already got a preconfigured response in the EventGhos
 
 ### Example of Option 3 Configuration– Invocation only:-
 
-1. **1.** The following steps are very similar to the steps completed previously, the only differences are:-
+1. The following steps are very similar to the steps completed previously, the only differences are:-
     - You are going to set the skill name to something relevant to the command you are making
     - Choosing your skill name will require more thought to avoid use of Alexa trigger words.
-2. **2.** Open the **alexa developer console** web page and Click  **Create**  **Skill** within the  **Alexa Skills Kit**
-3. **3.** Name your skill. This is the name displayed to users in the Alexa app. In this example I have used **welcome me home**.
-4. **4.** Leave **Custom** and **provision your own** ptions selected. Click **create skill**.
-5. **5.** Create an invocation name. This is the word or phrase that users will speak to activate the skill. I have used **welcome me home**  in the example. Amazon recommends against signal word invocation name.
+2. Open the **alexa developer console** web page and Click  **Create**  **Skill** within the  **Alexa Skills Kit**
+3. Name your skill. This is the name displayed to users in the Alexa app. In this example I have used **welcome me home**.
+4. Leave **Custom** and **provision your own** ptions selected. Click **create skill**.
+5. Create an invocation name. This is the word or phrase that users will speak to activate the skill. I have used **welcome me home**  in the example. Amazon recommends against signal word invocation name.
 
 Note: Invocation name cannot contain the launch words &quot;ask&quot;, &quot;begin&quot;, &quot;launch&quot;, &quot;load&quot;, &quot;open&quot;, &quot;play&quot;, &quot;resume&quot;, &quot;run&quot;, &quot;start&quot;, &quot;talk to&quot;, or &quot;tell&quot;.
 
-6. **6.** Enter a name for the intent. **WelcomeMeHome** is used in the example.
-7. **7.** Add Sample Utterances. In this example I have used &quot;welcome home&quot;.
+6. Enter a name for the intent. **WelcomeMeHome** is used in the example.
+7. Add Sample Utterances. In this example I have used &quot;welcome home&quot;.
 
 Note: No spaces are allowed.
 
-8. **8.** Copy your skill id from the **AWS Lambda ARN** within the **Endpoint**  section.
-9. **9.** Go back the AWS Console tab and add a new **Alexa Skills Kit** and paste the skill ID into the **Skill ID box** and click **Add**. Then **Save**.
-10. **10.** Copy the ARN address to clipboard. Return to the Alexa skill tab and paste your **ARN number** into the **Default Region**.
-11. **11.** Click Save **Endpoints** , **Save Model** and then **Build Model**. A message box confirming the build was successful should appear.
+8. Copy your skill id from the **AWS Lambda ARN** within the **Endpoint**  section.
+9. Go back the AWS Console tab and add a new **Alexa Skills Kit** and paste the skill ID into the **Skill ID box** and click **Add**. Then **Save**.
+10. Copy the ARN address to clipboard. Return to the Alexa skill tab and paste your **ARN number** into the **Default Region**.
+11. Click Save **Endpoints** , **Save Model** and then **Build Model**. A message box confirming the build was successful should appear.
 
 Note: There is no need to Publish the skill.
 
-12. **12.** Open the **Alexa app** on your **mobile phone**.
-    - Click on the burger menu on the top left and select **SKILLS &amp; GAMES**.
+12. Open the **Alexa app** on your **mobile phone**.
+   - Click on the burger menu on the top left and select **SKILLS &amp; GAMES**.
    - Goto **Your Skills** and **select Dev**.
    - **Open the skill** (Event Ghost or whatever your name it) and select **ENABLE TO USE**.
-13. **13.** Return to EventGhost and open the Python script associated to the **EG Alexa Welcome Script.**
-14. **14.** Paste the skill ID over the amzn1.ask.skill.xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx text on line 28 of the example skill script. Ensure the apostrophes (&#39;) remain either side of the ID.
+13. Return to EventGhost and open the Python script associated to the **EG Alexa Welcome Script.**
+14. Paste the skill ID over the amzn1.ask.skill.xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx text on line 28 of the example skill script. Ensure the apostrophes (&#39;) remain either side of the ID.
 
-15. **15.** Customise the trigger command and return message to suit your needs. Examples:-
+15. Customise the trigger command and return message to suit your needs. Examples:-
     - Existing code: eg.TriggerEvent(&#39;Invocation action example 1&#39;)
-   - Example altered code: eg.TriggerEvent(&#39;Welcome me home&#39;)
+    - Example altered code: eg.TriggerEvent(&#39;Welcome me home&#39;)
 
-1.
     - Existing code: ReturnMsg = random.choice(WELCOME\_RESPONSES)
     - Example altered code: ReturnMsg = &quot;Welcome home. Hasn&#39;t it been a lovely day&quot;
 
-1. **16.** Test your skill works. &quot;Alexa, welcome me home&quot;.
+16. Test your skill works. &quot;Alexa, welcome me home&quot;.
