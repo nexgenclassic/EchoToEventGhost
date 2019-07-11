@@ -11,9 +11,9 @@ There is a detailed step-by-step instruction with screenshots in the repo should
 ## Option 1 – Invocation, intent and action:-
 
 -  (Invocation, Intent, Action)
-  - Example 1: Alexa, &quot;Event ghost&quot;, &quot;perform action&quot;, &quot;lights on&quot;
-  - Example 2: Alexa, &quot;ask Event ghost to perform action lights on&quot;
-  - Example 3: Alexa, &quot;Event ghost&quot;, &quot;Dim lights&quot;, &quot;in dining room&quot;
+   - Example 1: Alexa, &quot;Event ghost&quot;, &quot;perform action&quot;, &quot;lights on&quot;
+    - Example 2: Alexa, &quot;ask Event ghost to perform action lights on&quot;
+   - Example 3: Alexa, &quot;Event ghost&quot;, &quot;Dim lights&quot;, &quot;in dining room&quot;
 - Benefits:
   - The actions can be configured with all sorts of pre-configured structure using the Alexa toolkit. This is useful if you want content like numbers, dates, weekdays etc...
   - Can be configured with lots of commands without spending a lot of time configuring Alexa skills.
@@ -44,15 +44,15 @@ There is a detailed step-by-step instruction with screenshots in the repo should
 
 You have to stay clear of Alexa&#39;s trigger commands (and there are loads which you will stumble over lots! For example &quot;Play&quot; or &quot;start&quot; would have been the obvious choice rather than &quot;initiate music&quot;, if they weren&#39;t restricted!)
 
-Setup Tutorial
+# Setup Tutorial
 
 ## Step 1 (Create your AWS Lambda function that your skill will use)
 
 1. Download or clone my EchoToEventGhost github project [https://github.com/nexgenclassic/EchoToEventGhost](https://github.com/nexgenclassic/EchoToEventGhost)
 2. Make sure you have your EventGhost Webserver is running and you can post to from outside your network.
-  - Get Your External IP, [https://whatismyipaddress.com/](https://whatismyipaddress.com/)
-  - Plus the post that your have configured for the Event Ghost webserver to run on (80 is default). If you need help with configuring port forwardinglook here [http://www.wikihow.com/Set-Up-Port-Forwarding-on-a-Router](http://www.wikihow.com/Set-Up-Port-Forwarding-on-a-Router)
-  - To test goto [http://ip:port/page?event](http://ip:port/page?event) ie. [http://192.168.1.1:80/index.html?EG\_Event](http://192.168.1.1/index.html?EG_Event) and a event should be logged in EventGhost
+   - Get Your External IP, [https://whatismyipaddress.com/](https://whatismyipaddress.com/)
+    - Plus the post that your have configured for the Event Ghost webserver to run on (80 is default). If you need help with configuring port forwardinglook here [http://www.wikihow.com/Set-Up-Port-Forwarding-on-a-Router](http://www.wikihow.com/Set-Up-Port-Forwarding-on-a-Router)
+   - To test goto [http://ip:port/page?event](http://ip:port/page?event) ie. [http://192.168.1.1:80/index.html?EG\_Event](http://192.168.1.1/index.html?EG_Event) and a event should be logged in EventGhost
 3. If you do not already have an account on AWS, go to Amazon Web Services and create an account.
 4. Log in to the AWS Management Console and navigate to AWS Lambda.
 5. Click the region drop-down in the upper-right corner of the console and select either **US East (N. Virginia)** or **EU (Ireland)**. Lambda functions for Alexa skills must be hosted in either the **US East (N. Virginia)** or **EU (Ireland)** region.
@@ -63,20 +63,20 @@ Setup Tutorial
 
 Note: If Node.js 6.10 is not available select a later version. You will be presented with more options later on.
 
-1. Select **Create a new role with basic Lambda permissions** from the drop down.
-2. Under the Lambda **function**   **code** section leave as  **Edit code inline.**
-3. Delete the existing code and then **copy in the code** from [\EchoToEventGhost\AlexaSkillKit\_Code\EchoToEGv2.js](https://github.com/nexgenclassic/EchoToEventGhost/blob/master/AlexaSkillKit_Code/EchoToEGv2.js)
-4. Edit the variables in the code:-
-  - Line 17: Is your EventGhost Webserver using **http** and https
-  - Line 19: **Enter your External IP** or domain name
-  - Line 22: Enter the **port number** you configured in the EventGhost Webserver
-  - Lines 30 &amp; 31 are your EventGhost Webserver user name and password
+10. Select **Create a new role with basic Lambda permissions** from the drop down.
+11. Under the Lambda **function**   **code** section leave as  **Edit code inline.**
+12. Delete the existing code and then **copy in the code** from [\EchoToEventGhost\AlexaSkillKit\_Code\EchoToEGv2.js](https://github.com/nexgenclassic/EchoToEventGhost/blob/master/AlexaSkillKit_Code/EchoToEGv2.js)
+13. Edit the variables in the code:-
+    - Line 17: Is your EventGhost Webserver using **http** and https
+    - Line 19: **Enter your External IP** or domain name
+    - Line 22: Enter the **port number** you configured in the EventGhost Webserver
+    - Lines 30 &amp; 31 are your EventGhost Webserver user name and password
 
 Note: There are other variables that can be set for added security or personalisation. It is recommended you get the function working before exploring these.
 
-1. Under the  **Lambda function handler and role**  section, leave  **Handler**  and  **Role**  as is and for  **Existing role**  select &quot;lamba\_basic\_execution&quot;
-2. Leave the other sections as is and click  **Next**  and then on the next page click  **Create Function**
-3. Under  **Actions**  you can test your function by using the  **Configure test event** , change the name of  **Hello World**  as needed and pasted the contents of [\EchoToEventGhost\AlexaSkillKit\_Code\EchoToEG\_TestEvent.xml](https://github.com/nexgenclassic/EchoToEventGhost/blob/master/AlexaSkillKit_Code/EchoToEG_TestEvent.xml)  (Line 23 is the command that is passed) and then  **Save and Test**  If all works you could see an event in your EventGhost log.
+14. Under the  **Lambda function handler and role**  section, leave  **Handler**  and  **Role**  as is and for  **Existing role**  select &quot;lamba\_basic\_execution&quot;
+15. Leave the other sections as is and click  **Next**  and then on the next page click  **Create Function**
+16. Under  **Actions**  you can test your function by using the  **Configure test event** , change the name of  **Hello World**  as needed and pasted the contents of [\EchoToEventGhost\AlexaSkillKit\_Code\EchoToEG\_TestEvent.xml](https://github.com/nexgenclassic/EchoToEventGhost/blob/master/AlexaSkillKit_Code/EchoToEG_TestEvent.xml)  (Line 23 is the command that is passed) and then  **Save and Test**  If all works you could see an event in your EventGhost log.
 
 ## Step 2 (Create your Alexa Skill and link your Lambda function)
 
@@ -100,9 +100,9 @@ Note: There are other variables that can be set for added security or personalis
 ## Step 3 (Ensure your skill is linked to your Alexa)
 
 1. Open the **Alexa app** on your **mobile phone**.
-  - Click on the burger menu on the top left and select **SKILLS &amp; GAMES**.
-  - Goto **Your Skills** and **select Dev**.
-  - **Open the skill** (Event Ghost or whatever your name it) and select **ENABLE TO USE**.
+    - Click on the burger menu on the top left and select **SKILLS &amp; GAMES**.
+    - Goto **Your Skills** and **select Dev**.
+   - **Open the skill** (Event Ghost or whatever your name it) and select **ENABLE TO USE**.
 
 ## Step 4 (EventGhost, add some code to make stuff happen)
 
@@ -121,8 +121,8 @@ Note: There are other variables that can be set for added security or personalis
 
 The following steps are very similar to the steps completed previously, the main differences are:-
 
-- You are going to set the skill name to something relevant to the command you are making
-- Choosing your skill name will require more thought to avoid use of Alexa trigger words.
+    - You are going to set the skill name to something relevant to the command you are making
+    - Choosing your skill name will require more thought to avoid use of Alexa trigger words.
 
 1. Open the alexa development console webpage [https://developer.amazon.com/alexa/console/ask](https://developer.amazon.com/alexa/console/ask) and edit your Event Ghost skill.
 
@@ -135,8 +135,7 @@ Note: If you want to use an invocation name other than &quot;Event Ghost&quot; c
 5. Add the **Alexa prompt,**&quot;Do you want to turn the {room} lights on?&quot;.
 6. Change the &quot; **Is this slot required to fulfil the intent?**&quot; slide to the **on** position.
 7. Click **Save Model** and then **build model**. Confirm the build is successful.
-8. Test your skill works.
-  - Say &quot;Alexa, event ghost&quot;, Alexa will respond with a welcome response, reply &quot;lights on&quot;, Alexa should respond &quot;in which room&quot;, reply &quot;Dining room&quot;, should prompt &quot;do you want to turn the dining room lights on&quot;, reply &quot;Yes&quot;, Alexa should respond &quot;trying command lights on in dining room&quot;.
+8. Test your skill works. Say &quot;Alexa, event ghost&quot;, Alexa will respond with a welcome response, reply &quot;lights on&quot;, Alexa should respond &quot;in which room&quot;, reply &quot;Dining room&quot;, should prompt &quot;do you want to turn the dining room lights on&quot;, reply &quot;Yes&quot;, Alexa should respond &quot;trying command lights on in dining room&quot;.
 
 Note: You can shorten the Alexa command request in a number of ways when the skill is configured in this way. Example &quot;Alexa, ask event ghost to turn the dining room lights on&quot;
 
@@ -162,8 +161,8 @@ Note: The play command has already got a preconfigured response in the EventGhos
 ### Example of Option 3 Configuration– Invocation only:-
 
 1. **1.** The following steps are very similar to the steps completed previously, the only differences are:-
-  - You are going to set the skill name to something relevant to the command you are making
-  - Choosing your skill name will require more thought to avoid use of Alexa trigger words.
+    - You are going to set the skill name to something relevant to the command you are making
+    - Choosing your skill name will require more thought to avoid use of Alexa trigger words.
 2. **2.** Open the **alexa developer console** web page and Click  **Create**  **Skill** within the  **Alexa Skills Kit**
 3. **3.** Name your skill. This is the name displayed to users in the Alexa app. In this example I have used **welcome me home**.
 4. **4.** Leave **Custom** and **provision your own** ptions selected. Click **create skill**.
@@ -171,31 +170,31 @@ Note: The play command has already got a preconfigured response in the EventGhos
 
 Note: Invocation name cannot contain the launch words &quot;ask&quot;, &quot;begin&quot;, &quot;launch&quot;, &quot;load&quot;, &quot;open&quot;, &quot;play&quot;, &quot;resume&quot;, &quot;run&quot;, &quot;start&quot;, &quot;talk to&quot;, or &quot;tell&quot;.
 
-1. **6.** Enter a name for the intent. **WelcomeMeHome** is used in the example.
-2. **7.** Add Sample Utterances. In this example I have used &quot;welcome home&quot;.
+6. **6.** Enter a name for the intent. **WelcomeMeHome** is used in the example.
+7. **7.** Add Sample Utterances. In this example I have used &quot;welcome home&quot;.
 
 Note: No spaces are allowed.
 
-1. **8.** Copy your skill id from the **AWS Lambda ARN** within the **Endpoint**  section.
-2. **9.** Go back the AWS Console tab and add a new **Alexa Skills Kit** and paste the skill ID into the **Skill ID box** and click **Add**. Then **Save**.
-3. **10.** Copy the ARN address to clipboard. Return to the Alexa skill tab and paste your **ARN number** into the **Default Region**.
-4. **11.** Click Save **Endpoints** , **Save Model** and then **Build Model**. A message box confirming the build was successful should appear.
+8. **8.** Copy your skill id from the **AWS Lambda ARN** within the **Endpoint**  section.
+9. **9.** Go back the AWS Console tab and add a new **Alexa Skills Kit** and paste the skill ID into the **Skill ID box** and click **Add**. Then **Save**.
+10. **10.** Copy the ARN address to clipboard. Return to the Alexa skill tab and paste your **ARN number** into the **Default Region**.
+11. **11.** Click Save **Endpoints** , **Save Model** and then **Build Model**. A message box confirming the build was successful should appear.
 
 Note: There is no need to Publish the skill.
 
-1. **12.** Open the **Alexa app** on your **mobile phone**.
-  - Click on the burger menu on the top left and select **SKILLS &amp; GAMES**.
-  - Goto **Your Skills** and **select Dev**.
-  - **Open the skill** (Event Ghost or whatever your name it) and select **ENABLE TO USE**.
-2. **13.** Return to EventGhost and open the Python script associated to the **EG Alexa Welcome Script.**
-3. **14.** Paste the skill ID over the amzn1.ask.skill.xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx text on line 28 of the example skill script. Ensure the apostrophes (&#39;) remain either side of the ID.
+12. **12.** Open the **Alexa app** on your **mobile phone**.
+    - Click on the burger menu on the top left and select **SKILLS &amp; GAMES**.
+   - Goto **Your Skills** and **select Dev**.
+   - **Open the skill** (Event Ghost or whatever your name it) and select **ENABLE TO USE**.
+13. **13.** Return to EventGhost and open the Python script associated to the **EG Alexa Welcome Script.**
+14. **14.** Paste the skill ID over the amzn1.ask.skill.xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx text on line 28 of the example skill script. Ensure the apostrophes (&#39;) remain either side of the ID.
 
-1. **15.** Customise the trigger command and return message to suit your needs. Examples:-
-  - Existing code: eg.TriggerEvent(&#39;Invocation action example 1&#39;)
-  - Example altered code: eg.TriggerEvent(&#39;Welcome me home&#39;)
+15. **15.** Customise the trigger command and return message to suit your needs. Examples:-
+    - Existing code: eg.TriggerEvent(&#39;Invocation action example 1&#39;)
+   - Example altered code: eg.TriggerEvent(&#39;Welcome me home&#39;)
 
 1.
-  - Existing code: ReturnMsg = random.choice(WELCOME\_RESPONSES)
-  - Example altered code: ReturnMsg = &quot;Welcome home. Hasn&#39;t it been a lovely day&quot;
+    - Existing code: ReturnMsg = random.choice(WELCOME\_RESPONSES)
+    - Example altered code: ReturnMsg = &quot;Welcome home. Hasn&#39;t it been a lovely day&quot;
 
 1. **16.** Test your skill works. &quot;Alexa, welcome me home&quot;.
