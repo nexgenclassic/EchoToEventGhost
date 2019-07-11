@@ -106,14 +106,14 @@ Note: There are other variables that can be set for added security or personalis
 
 ## Step 4 (EventGhost, add some code to make stuff happen)
 
-1. Create a new Python Script Macro, Name it EG Alexa Welcome Script, copy in the contents of  [\EchoToEventGhost\EventGhost\_Code\PythonWelcomeScript.py](https://github.com/nexgenclassic/EchoToEventGhost/blob/master/EventGhost_Code/PythonWelcomeScript.py)
-2. Create a second new Python Script Macro, Name it EG Alexa Action Script, copy in the contents of [\EchoToEventGhost\EventGhost\_Code\PythonActionScript.py](https://github.com/nexgenclassic/EchoToEventGhost/blob/master/EventGhost_Code/PythonActionScript.py)
-3. Copy [\EchoToEventGhost\EventGhost\_Code\index.html](https://github.com/m19brandon/EchoToEventGhost/blob/master/EventGhost_Code/index.html) into your webserver folder.
-4. Now it&#39;s time to talk to Alexa! Say: &quot;Alexa, Event Ghost&quot;. It will error, this is normal.
-5. From your EventGhost log, drag the HTTP.EchoToEGWelcome[etc…]. event into the welcome script macro.
-6. Now talk to Alexa again! Say: &quot;Alexa, ask Event Ghost to perform action test&quot;. It will error again.
-7. From your EventGhost log, drag the EchoToEG [etc…]. event into the action script macro.
-8. Test your Skill.
+2. Create a new Python Script Macro, Name it EG Alexa Welcome Script, copy in the contents of  [\EchoToEventGhost\EventGhost\_Code\PythonWelcomeScript.py](https://github.com/nexgenclassic/EchoToEventGhost/blob/master/EventGhost_Code/PythonWelcomeScript.py)
+3. Create a second new Python Script Macro, Name it EG Alexa Action Script, copy in the contents of [\EchoToEventGhost\EventGhost\_Code\PythonActionScript.py](https://github.com/nexgenclassic/EchoToEventGhost/blob/master/EventGhost_Code/PythonActionScript.py)
+4. Copy [\EchoToEventGhost\EventGhost\_Code\index.html](https://github.com/m19brandon/EchoToEventGhost/blob/master/EventGhost_Code/index.html) into your webserver folder.
+5. Now it&#39;s time to talk to Alexa! Say: &quot;Alexa, Event Ghost&quot;. It will error, this is normal.
+6. From your EventGhost log, drag the HTTP.EchoToEGWelcome[etc…]. event into the welcome script macro.
+7. Now talk to Alexa again! Say: &quot;Alexa, ask Event Ghost to perform action test&quot;. It will error again.
+8. From your EventGhost log, drag the EchoToEG [etc…]. event into the action script macro.
+9. Test your Skill.
 
 ## Setting up your commands
 
@@ -128,14 +128,14 @@ The following steps are very similar to the steps completed previously, the main
 
 Note: If you want to use an invocation name other than &quot;Event Ghost&quot; create a new skill as before.
 
-1. Add a new **Intent** and name it **LightsOnIn** is used in this example.
-2. Click on **Create a new slot** and enter a slot name called &quot;room&quot;. Change the Select a slot type to **AMAZON.Room**.
-3. Add Sample Utterances &quot;turn the {room} lights on&quot;, &quot;lights on in {room}&quot; and lights on {room}
-4. Turn the &quot; **Does this intent require confirmation?&quot;** slider to the **on** position.
-5. Add the **Alexa prompt,**&quot;Do you want to turn the {room} lights on?&quot;.
-6. Change the &quot; **Is this slot required to fulfil the intent?**&quot; slide to the **on** position.
-7. Click **Save Model** and then **build model**. Confirm the build is successful.
-8. Test your skill works. Say &quot;Alexa, event ghost&quot;, Alexa will respond with a welcome response, reply &quot;lights on&quot;, Alexa should respond &quot;in which room&quot;, reply &quot;Dining room&quot;, should prompt &quot;do you want to turn the dining room lights on&quot;, reply &quot;Yes&quot;, Alexa should respond &quot;trying command lights on in dining room&quot;.
+2. Add a new **Intent** and name it **LightsOnIn** is used in this example.
+3. Click on **Create a new slot** and enter a slot name called &quot;room&quot;. Change the Select a slot type to **AMAZON.Room**.
+4. Add Sample Utterances &quot;turn the {room} lights on&quot;, &quot;lights on in {room}&quot; and lights on {room}
+5. Turn the &quot; **Does this intent require confirmation?&quot;** slider to the **on** position.
+6. Add the **Alexa prompt,**&quot;Do you want to turn the {room} lights on?&quot;.
+7. Change the &quot; **Is this slot required to fulfil the intent?**&quot; slide to the **on** position.
+8. Click **Save Model** and then **build model**. Confirm the build is successful.
+9. Test your skill works. Say &quot;Alexa, event ghost&quot;, Alexa will respond with a welcome response, reply &quot;lights on&quot;, Alexa should respond &quot;in which room&quot;, reply &quot;Dining room&quot;, should prompt &quot;do you want to turn the dining room lights on&quot;, reply &quot;Yes&quot;, Alexa should respond &quot;trying command lights on in dining room&quot;.
 
 Note: You can shorten the Alexa command request in a number of ways when the skill is configured in this way. Example &quot;Alexa, ask event ghost to turn the dining room lights on&quot;
 
@@ -153,8 +153,8 @@ Note: If you want to use an invocation name other than &quot;Event Ghost&quot; c
 2. Add Sample Utterances &quot;play music&quot; and &quot;play&quot;
 3. Click **Save Model** and then **build model**. Confirm the build is successful.
 4. Test your skill works.
-  - Say &quot; **Alexa, event ghost**&quot;, Alexa should respond with one of the welcome responses configure in the event ghost python script.
-  - Reply &quot; **play**&quot; Alexa should respond &quot;got it, let&#39;s get rocking&quot; or &quot;got it let&#39;s get this party started&quot;.
+   - Say &quot; **Alexa, event ghost**&quot;, Alexa should respond with one of the welcome responses configure in the event ghost python script.
+   - Reply &quot; **play**&quot; Alexa should respond &quot;got it, let&#39;s get rocking&quot; or &quot;got it let&#39;s get this party started&quot;.
 
 Note: The play command has already got a preconfigured response in the EventGhost action python script. Take a look at it and review the script for understanding.
 
@@ -183,9 +183,9 @@ Note: No spaces are allowed.
 Note: There is no need to Publish the skill.
 
 12. Open the **Alexa app** on your **mobile phone**.
-   - Click on the burger menu on the top left and select **SKILLS &amp; GAMES**.
-   - Goto **Your Skills** and **select Dev**.
-   - **Open the skill** (Event Ghost or whatever your name it) and select **ENABLE TO USE**.
+    - Click on the burger menu on the top left and select **SKILLS &amp; GAMES**.
+    - Goto **Your Skills** and **select Dev**.
+    - **Open the skill** (Event Ghost or whatever your name it) and select **ENABLE TO USE**.
 13. Return to EventGhost and open the Python script associated to the **EG Alexa Welcome Script.**
 14. Paste the skill ID over the amzn1.ask.skill.xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx text on line 28 of the example skill script. Ensure the apostrophes (&#39;) remain either side of the ID.
 
