@@ -50,7 +50,7 @@ if len(eg.event.payload) > 2:
     #                ReturnMsg = 'Bing! the ' + eg.globals.bb_cmd.partition(' ')[2] + ' lights are on.'
     #                EndSession = 'yes'
 
-    #Example 3
+    #Example 3 This is a pre-configured example used in the tutorial of the configuration of option 2.
 	elif   eg.globals.bb_cmd == 'play':
                     eg.TriggerEvent('Alexa.Play/Pause')
                     ReturnMsg = 'Got it, ' + random.choice(PLAY_RESPONSES)
