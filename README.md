@@ -120,7 +120,6 @@ Note: There are other variables that can be set for added security or personalis
 ### Example of Option 1 Configuration – Invocation, intent and action:-
 
 The following steps are very similar to the steps completed previously, the main differences are:-
-
     - You are going to set the skill name to something relevant to the command you are making
     - Choosing your skill name will require more thought to avoid use of Alexa trigger words.
 
